@@ -1,0 +1,17 @@
+{
+  "name": "ddzs",
+  "productName": "Ddzs",
+  "version": "0.1.0",
+  "description": "my astounding project",
+  "author": {
+    "name": "卓文理",
+    "email": "531840344@qq.com"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "electron-config": "^1.0.0",
+    "electron-context-menu": "^0.9.1",
+    "electron-debug": "^1.1.0",
+    "electron-is-dev": "^0.2.0"
+  }
+}

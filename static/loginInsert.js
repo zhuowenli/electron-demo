@@ -9,20 +9,22 @@
 (function() {
     const page = {
         init() {
-            // this.getLoginInfo(window.autoLoginId);
+            this.getLoginInfo(window.autoLoginId);
             this.bindEvent();
-            this.getLoginInfo();
         },
         bindEvent() {
             document.getElementById('loginBtnId').addEventListener('click', () => {
                 const username = document.getElementById('usernameId').value;
                 const password = document.getElementById('passwordId').value;
 
-                console.log(username, password);
                 require('electron').ipcRenderer.send('onLogin', { username, password });
             });
         },
-        getLoginInfo() {
+        getLoginInfo(id) {
+            if (id) {
+                console.log(id);
+            }
+
             document.getElementById('usernameId').value = 'pdd6673148002';
             document.getElementById('passwordId').value = 'Huanleguang275';
             document.getElementById('loginBtnId').setAttribute('data-click', 'true');

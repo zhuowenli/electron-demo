@@ -12,6 +12,7 @@ const isDev = typeof process.env.NODE_ENV === 'string'
     ? (process.env.NODE_ENV === 'development')
     : require('electron-is-dev');
 
+// 页面加载时，添加 HLG 全局方法
 document.addEventListener('DOMNodeInserted', () => {
     window.HLG = {
         request,

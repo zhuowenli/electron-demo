@@ -48,10 +48,19 @@ function createMainWindow() {
         x: lastWindowState.x,
         y: lastWindowState.y,
         width: lastWindowState.width,
-        height: lastWindowState.height
+        height: lastWindowState.height,
+        webPreferences: {
+            devTools: isDev,
+            webSecurity: false,
+            allowRunningInsecureContent: true,
+            preload: `${__dirname}/preload/index.js`
+        },
     });
 
-    const url = isDev ? 'http://localhost:4000' : `file://${path.join(__dirname, 'renderer', 'index.html')}`;
+    win.webContents.openDevTools();
+
+    const url = isDev ? 'http://localhost:4000/login' : `file://${path.join(__dirname, 'renderer', 'index.html')}`;
+    // const url = 'https://tbgr.huanleguang.com';
 
     win.loadURL(url);
 
@@ -69,6 +78,8 @@ function createMainWindow() {
 
     win.on('page-title-updated', e => {
         e.preventDefault();
+
+        console.log(11);
     });
 
     return win;

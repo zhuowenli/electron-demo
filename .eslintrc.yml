@@ -3,19 +3,19 @@ root: true
 env:
   es6: true
   browser: true
-  jest: true
-
-parser: 'babel-eslint'
+  # jest: true
 
 globals:
   $: true
+  HLG: true
 
 extends:
   - airbnb-base
-  - vue
+  - plugin:vue/recommended
 
 parserOptions:
   sourceType: module
+  parser: babel-eslint
 
 rules:
   indent:

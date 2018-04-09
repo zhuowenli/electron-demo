@@ -13,6 +13,7 @@
 </template>
 
 <script>
+import { remote } from 'electron';
 import request from '../../services/request';
 // import sleep from '../../services/sleep';
 
@@ -40,8 +41,10 @@ export default {
                 document.querySelector('body').appendChild(scriptTag);
             `;
 
+            // 监听页面加载完成
             webview.addEventListener('did-finish-load', () => {
-                if (HLG.debug) { // 调试用
+                // 调试用
+                if (HLG.debug) {
                     webview.openDevTools();
                 }
 
@@ -53,20 +56,19 @@ export default {
                 }
             });
 
-            require('electron').remote.ipcMain.on('onLogin', (event, arg) => {
-                this.loginInfo = arg;
-
-                console.log(arg);
+            // 监听登录界面注入脚本发送的消息
+            remote.ipcMain.on('onLogin', (event, loginInfo) => {
+                this.loginInfo = loginInfo;
             });
 
             // 登录完成之后，会有一个 hash 的跳转。需要分开处理
             webview.addEventListener('did-navigate-in-page', () => {
-                const webviewContents = webview.getWebContents();
+                const { webContents } = webview.getWebContents();
                 const url = webview.getURL();
                 let obj;
 
-                if (url.indexOf('mms.pinduoduo.com/Pdd.html#/login') == -1) {
-                    webviewContents.webContents.session.cookies.get({}, async (err, cookies) => {
+                if (url.indexOf('mms.pinduoduo.com/Pdd.html#/login') === -1) {
+                    webContents.session.cookies.get({}, async (err, cookies) => {
                         try {
                             const res = await request({
                                 url: `https://mms.pinduoduo.com/earth/api/user/userinfo?_${Date.now()}`,
@@ -87,7 +89,9 @@ export default {
                             };
 
                             console.log('====================================');
-                            console.log(`${res.result.mall_id}`, obj);
+                            console.log(res.result.mall_id);
+                            console.log(obj);
+                            console.log('====================================');
 
                             require('electron').ipcRenderer.send('sucLogin', obj);
                         } catch (e) {

@@ -5,7 +5,7 @@
  */
 
 /**
- * 封装 HLG.request
+ * 封装 HLG.request，伪造成拼多多发请求
  *
  * @param {Object} config
  * @param {String} config.url 链接
@@ -17,7 +17,7 @@
 export default async function ({
     url, method, params, cookie
 }) {
-    const macUAString = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_12_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/59.0.3071.115 Safari/537.36';
+    const ua = 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_4) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/66.0.3359.81 Safari/537.36';
     cookie = cookie || await HLG.getCookies();
     let result;
 
@@ -27,7 +27,7 @@ export default async function ({
             .set('Referer', 'http://mms.pinduoduo.com/Pdd.html')
             .set('origin', 'http://mms.pinduoduo.com')
             .set('Cookie', cookie)
-            .set('User-Agent', macUAString)
+            .set('User-Agent', ua)
             .timeout({
                 response: 1000 * 20, // Wait 5 seconds for the server to start sending
             });

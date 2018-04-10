@@ -1,7 +1,6 @@
 <template lang="pug">
     .login
         webview.webview(
-            ng-if="show"
             allowpopups
             nodeintegration
             disablewebsecurity
@@ -22,13 +21,11 @@ export default {
     data() {
         return {
             partition: `persist:${Math.random()}`,
-            show: false,
             loginInfo: {},
             loginId: null,
         };
     },
     async mounted() {
-        this.show = true;
         this.initWebViewEvent();
     },
     methods: {
